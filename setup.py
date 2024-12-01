@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'pi-user-input-node'
+package_name = 'pi_user_input_node'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'user_input_node = pi-user-input-node.user_input_node:main'
+            'user_input_node = pi_user_input_node.user_input_node:main'
         ],
     },
 )
