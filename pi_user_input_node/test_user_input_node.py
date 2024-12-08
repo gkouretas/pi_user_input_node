@@ -17,14 +17,41 @@ from functools import partial
 
 from user_input_node_config import *
 
-def test_button_callback(button_description: str):
-    print(f"button {button_description} pressed")
+def test_button_callback(button_description: str, encoder: RotaryEncoder, display: LEDMultiCharDisplay):
+    # TODO: improve this
+    if button_description == "0%":
+        encoder.steps = 0
+    elif button_description == "25%":
+        encoder.steps = 25
+    elif button_description == "50%":
+        encoder.steps = 50
+    elif button_description == "75%":
+        encoder.steps = 75
+    elif button_description == "100%":
+        encoder.steps = 100
+    
+    display.value = str(encoder.steps)
     
 def test_encoder_callback(encoder: RotaryEncoder, display: LEDMultiCharDisplay):
     display.value = str(encoder.steps)
 
 def main():
     button_objs: list[Button] = []
+        
+    encoder_obj = RotaryEncoder(
+        a = ENCODER_CONFIGURATION.a,
+        b = ENCODER_CONFIGURATION.b,
+        max_steps = 100 # clamp to 100
+    )
+    
+    seven_segment_obj = LEDMultiCharDisplay(
+        LEDCharDisplay(*SEVEN_SEGMENT_LED_PINS, active_high = True),
+        *SEVEN_SEGMENT_MUX_PINS,
+        active_high = True
+    )
+
+    encoder_obj.when_rotated = partial(test_encoder_callback, encoder_obj, seven_segment_obj)
+        
     for button in BUTTON_ARRAY_PINS:
         # Initialize configured buttons
         button_objs.append(
@@ -35,22 +62,8 @@ def main():
             )
         )
         
-        button_objs[-1].when_activated = partial(test_button_callback, button.description)
+        button_objs[-1].when_activated = partial(test_button_callback, button.description, encoder_obj, seven_segment_obj)
         
-    encoder_obj = RotaryEncoder(
-        a = ENCODER_CONFIGURATION.a,
-        b = ENCODER_CONFIGURATION.b,
-        max_steps = 100 # clamp to 100
-    )
-    
-    encoder_obj.when_rotated = partial(test_encoder_callback, encoder_obj)
-    
-    seven_segment_obj = LEDMultiCharDisplay(
-        LEDCharDisplay(*SEVEN_SEGMENT_LED_PINS, active_high = True),
-        *SEVEN_SEGMENT_MUX_PINS,
-        active_high = True
-    )
-    
     rgba_led_obj = RGBLED(
         red = RGB_LED_PINS.r,
         green = RGB_LED_PINS.g,
