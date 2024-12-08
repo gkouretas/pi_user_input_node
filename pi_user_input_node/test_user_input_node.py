@@ -10,6 +10,9 @@ from gpiozero.boards import (
     LEDCharDisplay, LEDMultiCharDisplay
 )
 
+from collections import deque
+from itertools import cycle
+
 from functools import partial
 
 from user_input_node_config import *
@@ -60,11 +63,18 @@ def main():
     print("Setup complete")
 
     # Test outputs
-    rgba_led_obj.color = (1, 1, 0) # yellow
-    seven_segment_obj.source = "123"
+    rgba_led_obj.color = (1, 0, 0) # red
     
-    print("Wrote RGBA + seven segment test values")
-    
+    def scroller(message, chars=4):
+        d = deque(maxlen=chars)
+        for c in cycle(message):
+            d.append(c)
+            if len(d) == chars:
+                yield ''.join(d)
+
+    seven_segment_obj.source_delay = 1.0
+    seven_segment_obj.source = scroller('GPIO 2ER0    ')
+
     # Loop
     while True: 
         time.sleep(0.1)
