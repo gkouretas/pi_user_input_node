@@ -17,6 +17,8 @@ from functools import partial
 
 from user_input_node_config import *
 
+start_stop_state = False
+
 def test_button_callback(button_description: str, encoder: RotaryEncoder, display: LEDMultiCharDisplay):
     # TODO: improve this
     if button_description == "0%":
@@ -29,6 +31,16 @@ def test_button_callback(button_description: str, encoder: RotaryEncoder, displa
         encoder.steps = 75
     elif button_description == "100%":
         encoder.steps = 100
+    else:
+        # start/stop button
+        global start_stop_state
+        start_stop_state = not start_stop_state
+        encoder.steps = 0
+        if start_stop_state:
+            pass
+        else:
+            display.value = ""
+            return
     
     display.value = str(encoder.steps)
     
@@ -76,7 +88,7 @@ def main():
 
     # Test outputs
     rgba_led_obj.color = (1, 0, 0) # red
-    seven_segment_obj.value = "0"
+    seven_segment_obj.value = ""
 
     # Loop
     while True: 
