@@ -64,7 +64,7 @@ def main():
 
     # Test outputs
     rgba_led_obj.color = (1, 0, 0) # red
-    seven_segment_obj.source = "123"
+    seven_segment_obj.source = yield "".join("123")
 
     # Loop
     while True: 
