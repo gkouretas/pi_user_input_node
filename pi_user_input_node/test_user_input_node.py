@@ -41,7 +41,7 @@ def main():
     encoder_obj = RotaryEncoder(
         a = ENCODER_CONFIGURATION.a,
         b = ENCODER_CONFIGURATION.b,
-        bounce_time = 0.1 # 100 ms
+        bounce_time = None # 100 ms
     )
     
     encoder_obj.when_activated = partial(test_encoder_callback, encoder_obj)
@@ -68,5 +68,6 @@ def main():
 
     # Loop
     while True: 
-        time.sleep(0.1)
+        print(encoder_obj.steps)
+        time.sleep(1.0)
 
