@@ -65,7 +65,7 @@ def main():
     # Test outputs
     rgba_led_obj.color = (1, 0, 0) # red
     
-    def scroller(message, chars=4):
+    def scroller(message, chars=3):
         d = deque(maxlen=chars)
         for c in cycle(message):
             d.append(c)
