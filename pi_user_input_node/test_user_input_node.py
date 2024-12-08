@@ -22,6 +22,7 @@ def test_button_callback(button_description: str):
     
 def test_encoder_callback(encoder: RotaryEncoder):
     print(f"encoder value: {encoder.steps}")
+    encoder.steps = 0 # reset steps
     # set seven segment...
  
 
@@ -42,10 +43,10 @@ def main():
     encoder_obj = RotaryEncoder(
         a = ENCODER_CONFIGURATION.a,
         b = ENCODER_CONFIGURATION.b,
-        max_steps = 1 # clamp to 100
+        max_steps = 100 # clamp to 100
     )
     
-    encoder_obj.when_activated = partial(test_encoder_callback, encoder_obj)
+    encoder_obj.when_rotated = partial(test_encoder_callback, encoder_obj)
     
     seven_segment_obj = LEDMultiCharDisplay(
         LEDCharDisplay(*SEVEN_SEGMENT_LED_PINS, active_high = True),
