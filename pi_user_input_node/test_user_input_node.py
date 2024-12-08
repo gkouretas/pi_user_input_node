@@ -73,7 +73,7 @@ def main():
                 yield ''.join(d)
 
     seven_segment_obj.source_delay = 1.0
-    seven_segment_obj.source = scroller('GPIO 2ER0    ')
+    seven_segment_obj.source = scroller('GPIO 2E80    ')
 
     # Loop
     while True: 
