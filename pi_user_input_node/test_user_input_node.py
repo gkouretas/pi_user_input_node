@@ -22,6 +22,7 @@ def test_button_callback(button_description: str):
     
 def test_encoder_callback(encoder: RotaryEncoder):
     print(f"encoder value: {encoder.steps}")
+    # set seven segment...
  
 
 def main():
@@ -41,7 +42,7 @@ def main():
     encoder_obj = RotaryEncoder(
         a = ENCODER_CONFIGURATION.a,
         b = ENCODER_CONFIGURATION.b,
-        bounce_time = None # 100 ms
+        max_steps = 1 # clamp to 100
     )
     
     encoder_obj.when_activated = partial(test_encoder_callback, encoder_obj)
@@ -68,6 +69,5 @@ def main():
 
     # Loop
     while True: 
-        print(encoder_obj.steps)
         time.sleep(1.0)
 
