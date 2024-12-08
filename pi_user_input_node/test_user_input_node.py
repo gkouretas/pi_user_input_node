@@ -20,11 +20,8 @@ from user_input_node_config import *
 def test_button_callback(button_description: str):
     print(f"button {button_description} pressed")
     
-def test_encoder_callback(encoder: RotaryEncoder):
-    print(f"encoder value: {encoder.steps}")
-    encoder.steps = 0 # reset steps
-    # set seven segment...
- 
+def test_encoder_callback(encoder: RotaryEncoder, display: LEDMultiCharDisplay):
+    display.value = str(encoder.steps)
 
 def main():
     button_objs: list[Button] = []
@@ -66,7 +63,7 @@ def main():
 
     # Test outputs
     rgba_led_obj.color = (1, 0, 0) # red
-    seven_segment_obj.value = "123"
+    seven_segment_obj.value = "0"
 
     # Loop
     while True: 
