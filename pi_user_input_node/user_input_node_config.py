@@ -49,8 +49,8 @@ SEVEN_SEGMENT_MUX_PINS = [
 ]
 
 RGB_LED_PINS: PiRGBInfo = PiRGBInfo(
-    r = 24,
-    g = 25,
-    b = 4
+    r = 4,
+    g = 24,
+    b = 25
 )
 
