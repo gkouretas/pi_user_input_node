@@ -56,10 +56,14 @@ def main():
         active_high = True,
         pwm = True
     )
+    
+    print("Setup complete")
 
     # Test outputs
     rgba_led_obj.color = (1, 1, 0) # yellow
     seven_segment_obj.source = "123"
+    
+    print("Wrote RGBA + seven segment test values")
     
     # Loop
     while True: 
