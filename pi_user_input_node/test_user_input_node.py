@@ -64,16 +64,7 @@ def main():
 
     # Test outputs
     rgba_led_obj.color = (1, 0, 0) # red
-    
-    def scroller(message, chars=3):
-        d = deque(maxlen=chars)
-        for c in cycle(message):
-            d.append(c)
-            if len(d) == chars:
-                yield ''.join(d)
-
-    seven_segment_obj.source_delay = 1.0
-    seven_segment_obj.source = scroller('GPIO 2E80    ')
+    seven_segment_obj.source = "123"
 
     # Loop
     while True: 
