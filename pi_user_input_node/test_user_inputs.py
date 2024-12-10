@@ -10,9 +10,6 @@ from gpiozero.boards import (
     LEDCharDisplay, LEDMultiCharDisplay
 )
 
-from collections import deque
-from itertools import cycle
-
 from functools import partial
 
 from user_input_node_config import *
@@ -21,15 +18,15 @@ start_stop_state = False
 
 def test_button_callback(button_description: str, encoder: RotaryEncoder, display: LEDMultiCharDisplay):
     # TODO: improve this
-    if button_description == "0%":
+    if button_description == "0":
         encoder.steps = 0
-    elif button_description == "25%":
+    elif button_description == "25":
         encoder.steps = 25
-    elif button_description == "50%":
+    elif button_description == "50":
         encoder.steps = 50
-    elif button_description == "75%":
+    elif button_description == "75":
         encoder.steps = 75
-    elif button_description == "100%":
+    elif button_description == "100":
         encoder.steps = 100
     else:
         # start/stop button
@@ -64,7 +61,7 @@ def main():
 
     encoder_obj.when_rotated = partial(test_encoder_callback, encoder_obj, seven_segment_obj)
         
-    for button in BUTTON_ARRAY_PINS:
+    for button in BUTTON_ARRAY_CONFIGURATION:
         # Initialize configured buttons
         button_objs.append(
             Button(

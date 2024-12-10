@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'test_user_input_node = pi_user_input_node.test_user_input_node:main'
+            'test_user_input = pi_user_input_node.test_user_inputs:main',
+            'user_input_node = pi_user_input_node.user_input_node:main'
         ],
     },
 )

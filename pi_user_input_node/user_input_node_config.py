@@ -1,10 +1,16 @@
+from enum import IntEnum
 from dataclasses import dataclass
+
+# Typedefs for configuration-related stuff
+class PiButtonType(IntEnum):
+    BUTTON_TYPE_PERCENTAGE = 0
+    BUTTON_TYPE_SWITCH = 1
 
 @dataclass(frozen = True)
 class PiButtonInfo:
     pin: int
     description: str
-    
+    button_type: PiButtonType
     
 @dataclass(frozen=True)
 class PiEncoderInfo:
@@ -17,13 +23,15 @@ class PiRGBInfo:
     g: int
     b: int
     
-BUTTON_ARRAY_PINS: tuple[PiButtonInfo] = (
-    PiButtonInfo(12, "0%"),
-    PiButtonInfo(20, "25%"),
-    PiButtonInfo(23, "50%"),
-    PiButtonInfo(16, "75%"),
-    PiButtonInfo(21, "100%"),
-    PiButtonInfo(18, "START/STOP")
+# Configuration
+BUTTON_DEFAULT_DEBOUNCE_DURATION_SEC = 0.1
+BUTTON_ARRAY_CONFIGURATION: tuple[PiButtonInfo] = (
+    PiButtonInfo(12, "0", PiButtonType.BUTTON_TYPE_PERCENTAGE),
+    PiButtonInfo(20, "25", PiButtonType.BUTTON_TYPE_PERCENTAGE),
+    PiButtonInfo(23, "50", PiButtonType.BUTTON_TYPE_PERCENTAGE),
+    PiButtonInfo(16, "75", PiButtonType.BUTTON_TYPE_PERCENTAGE),
+    PiButtonInfo(21, "100", PiButtonType.BUTTON_TYPE_PERCENTAGE),
+    PiButtonInfo(18, "START/STOP", PiButtonType.BUTTON_TYPE_PERCENTAGE)
 )
 
 ENCODER_CONFIGURATION: PiEncoderInfo = PiEncoderInfo(
@@ -31,6 +39,7 @@ ENCODER_CONFIGURATION: PiEncoderInfo = PiEncoderInfo(
     b = 27
 )
 
+DISPLAY_IDLE_OUTPUT = ""
 SEVEN_SEGMENT_LED_PINS = (
     2, # A
     3, # B
@@ -54,3 +63,8 @@ RGB_LED_PINS: PiRGBInfo = PiRGBInfo(
     b = 25
 )
 
+# ROS configuration
+USER_INPUT_NODE_NAME = "user_input_node"
+USER_INPUT_TOPIC_NAME = "user_input_node/fatigue_info"
+USER_INPUT_TOPIC_PUBLISH_RATE = 0.01 # 10 Hz
+USER_INPUT_QOS_PROFILE = 0
