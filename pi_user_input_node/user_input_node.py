@@ -116,8 +116,6 @@ class UserInputNode:
             msg.is_active = self._is_active
             msg.fatigue_percentage = self.fatigue_percentage if self._is_active else 0
 
-        self._node.get_logger().info("Publishing")
-
         self._publisher.publish(msg)
 
 def main():
