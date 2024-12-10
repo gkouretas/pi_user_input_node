@@ -42,7 +42,7 @@ class UserInputNode:
                 bounce_time = BUTTON_DEFAULT_DEBOUNCE_DURATION_SEC
             ) 
 
-            _button.when_activated = partial(self.button_callback, _button)
+            _button.when_activated = partial(self.button_callback, button_info)
 
             self._buttons.append(_button)
         
@@ -64,6 +64,8 @@ class UserInputNode:
             USER_INPUT_TOPIC_PUBLISH_RATE, 
             self.publish_info_callback
         )
+
+        self._node.get_logger().info("Initialized user input class")
             
     @property
     def fatigue_percentage(self):
