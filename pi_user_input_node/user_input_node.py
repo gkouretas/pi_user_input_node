@@ -92,12 +92,12 @@ class UserInputNode:
                 # Always reset the encoder step count on a start/stop change
                 self._encoder.steps = 0
 
-                if self._is_active:
-                    # Start displaying the encoder steps again
-                    self._display.value = str(self._encoder.steps)
-                else:
-                    # Show idle display
-                    self._display.value = DISPLAY_IDLE_OUTPUT
+            if self._is_active:
+                # Start displaying the encoder steps again
+                self._display.value = str(self._encoder.steps)
+            else:
+                # Show idle display
+                self._display.value = DISPLAY_IDLE_OUTPUT
 
     def encoder_callback(self):
         self._node.get_logger().info("Encoder rotation event triggered")
