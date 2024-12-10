@@ -31,7 +31,7 @@ BUTTON_ARRAY_CONFIGURATION: tuple[PiButtonInfo] = (
     PiButtonInfo(23, "50", PiButtonType.BUTTON_TYPE_PERCENTAGE),
     PiButtonInfo(16, "75", PiButtonType.BUTTON_TYPE_PERCENTAGE),
     PiButtonInfo(21, "100", PiButtonType.BUTTON_TYPE_PERCENTAGE),
-    PiButtonInfo(18, "START/STOP", PiButtonType.BUTTON_TYPE_PERCENTAGE)
+    PiButtonInfo(18, "START/STOP", PiButtonType.BUTTON_TYPE_SWITCH)
 )
 
 ENCODER_CONFIGURATION: PiEncoderInfo = PiEncoderInfo(
