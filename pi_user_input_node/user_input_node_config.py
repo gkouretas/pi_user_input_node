@@ -63,8 +63,10 @@ RGB_LED_PINS: PiRGBInfo = PiRGBInfo(
     b = 25
 )
 
+HEARTBEAT_LED_PIN: int = 11
+
 # ROS configuration
 USER_INPUT_NODE_NAME = "user_input_node"
 USER_INPUT_TOPIC_NAME = "user_input_node/fatigue_info"
-USER_INPUT_TOPIC_PUBLISH_RATE = 0.01 # 10 Hz
+USER_INPUT_TOPIC_PUBLISH_RATE = 0.01 # 100 Hz
 USER_INPUT_QOS_PROFILE = 0

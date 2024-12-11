@@ -9,11 +9,12 @@ from gpiozero.input_devices import (
     Button, RotaryEncoder
 )
 
-from gpiozero.output_devices import RGBLED
+from gpiozero.output_devices import RGBLED, LED
 
 from gpiozero.boards import (
     LEDCharDisplay, LEDMultiCharDisplay
 )
+from colorzero import Color
 
 from functools import partial
 
@@ -23,6 +24,8 @@ class UserInputNode:
         self._lock = threading.RLock()
 
         self._is_active = False
+        self._pub_count = 0
+        self._heartbeat_decimation = int(1 / USER_INPUT_TOPIC_PUBLISH_RATE) # Update every 1s
 
         # TODO: handle negative counts
         self._encoder = RotaryEncoder(
@@ -53,6 +56,21 @@ class UserInputNode:
         )
 
         self._display.value = DISPLAY_IDLE_OUTPUT
+
+        self._rgb_led = RGBLED(
+            red = RGB_LED_PINS.r,
+            green = RGB_LED_PINS.g,
+            blue = RGB_LED_PINS.b,
+            active_high = True,
+            pwm = True
+        )
+
+        self._rgb_led.color = Color.red
+
+        self._heartbeat_led = LED(
+            pin = HEARTBEAT_LED_PIN,
+            active_high = True
+        )
 
         self._publisher = self._node.create_publisher(
             msg_type = UserInputMsg,
@@ -92,6 +110,9 @@ class UserInputNode:
                 # Always reset the encoder step count on a start/stop change
                 self._encoder.steps = 0
 
+                # Update RGB LED
+                self._rgb_led.color = Color.green if self._is_active else Color.red
+
             if self._is_active:
                 # Start displaying the encoder steps again
                 self._display.value = str(self._encoder.steps)
@@ -106,8 +127,9 @@ class UserInputNode:
             # Clamp value if it goes negative
             self._encoder.steps = max(0, self._encoder.steps)
 
-            # Update the display whenever the encoder counts update
-            self._display.value = str(self._encoder.steps)
+            # Update the display whenever the encoder counts update, if active
+            if self._is_active:
+                self._display.value = str(self._encoder.steps)
 
     def publish_info_callback(self):
         msg = UserInputMsg()
@@ -117,6 +139,12 @@ class UserInputNode:
             msg.fatigue_percentage = self.fatigue_percentage if self._is_active else 0
 
         self._publisher.publish(msg)
+
+        # Toggle heartbeat 
+        self._pub_count += 1
+        if self._pub_count % self._heartbeat_decimation:
+            self._heartbeat_led.toggle()
+
 
 def main():
     rclpy.init()
