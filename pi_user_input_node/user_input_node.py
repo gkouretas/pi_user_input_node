@@ -65,7 +65,7 @@ class UserInputNode:
             pwm = True
         )
 
-        self._rgb_led.color = Color.red
+        self._rgb_led.color = Color("red")
 
         self._heartbeat_led = LED(
             pin = HEARTBEAT_LED_PIN,
@@ -111,7 +111,7 @@ class UserInputNode:
                 self._encoder.steps = 0
 
                 # Update RGB LED
-                self._rgb_led.color = Color.green if self._is_active else Color.red
+                self._rgb_led.color = Color("green") if self._is_active else Color("red")
 
             if self._is_active:
                 # Start displaying the encoder steps again
