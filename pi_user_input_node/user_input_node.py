@@ -142,7 +142,7 @@ class UserInputNode:
 
         # Toggle heartbeat 
         self._pub_count += 1
-        if self._pub_count % self._heartbeat_decimation:
+        if self._pub_count % self._heartbeat_decimation == 0:
             self._heartbeat_led.toggle()
 
 
