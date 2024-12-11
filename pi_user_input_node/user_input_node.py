@@ -9,7 +9,7 @@ from gpiozero.input_devices import (
     Button, RotaryEncoder
 )
 
-from gpiozero.output_devices import RGBLED, PWMLED
+from gpiozero.output_devices import RGBLED, LED
 
 from gpiozero.boards import (
     LEDCharDisplay, LEDMultiCharDisplay
@@ -67,7 +67,7 @@ class UserInputNode:
 
         self._rgb_led.color = Color("red")
 
-        self._heartbeat_led = PWMLED(
+        self._heartbeat_led = LED(
             pin = HEARTBEAT_LED_PIN,
             active_high = True
         )
