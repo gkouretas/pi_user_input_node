@@ -116,6 +116,7 @@ class UserInputNode:
             if self._is_active:
                 # Start displaying the encoder steps again
                 self._display.value = str(self._encoder.steps)
+                self._node.get_logger().info(f"Updated value: {self._display.value}")
             else:
                 # Show idle display
                 self._display.value = DISPLAY_IDLE_OUTPUT
@@ -130,6 +131,7 @@ class UserInputNode:
             # Update the display whenever the encoder counts update, if active
             if self._is_active:
                 self._display.value = str(self._encoder.steps)
+                self._node.get_logger().info(f"Updated value: {self._display.value}")
 
     def publish_info_callback(self):
         msg = UserInputMsg()
